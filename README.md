@@ -4,19 +4,24 @@ This project is a React-based mini dashboard with API integration to fetch, crea
 ## React + TypeScript + Vite
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+### Prerequisites
+Node.js (20 or higher)
+npm or yarn
+
 ### Project Setup
 - git clone URL
 - cd IBSCORP-TASK
 - npm install | yarn install
 - npm run dev | yarn dev
 
-#### API Integration
+### API Integration
 This project uses [JSONPlaceholder](https://jsonplaceholder.typicode.com/) for mock API calls
 
-##### Technologies Used
+### Technologies Used
 - React
 - TypeScript
 - Vite
 - Tailwind CSS
 - Styled-components
+- TanStack Query
 

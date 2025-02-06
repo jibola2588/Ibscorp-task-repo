@@ -33,7 +33,7 @@ export const UserModal: React.FC<UserModalProps> = ({
       },
     }
   );
-
+  
   
   useEffect(() => {
     if (user) {

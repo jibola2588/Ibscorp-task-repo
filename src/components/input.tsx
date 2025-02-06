@@ -15,6 +15,8 @@ export const Input: React.FC<InputProps> = ({
       {label && (
         <label className="block text-sm font-medium text-gray-700">
           {label}
+          <sup className="text-red-600 ml-1" aria-hidden="true">*</sup>
+          <span className="sr-only">(Required)</span>
         </label>
       )}
       <input
