@@ -35,23 +35,35 @@ function Users() {
       updateUser(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
+      toast.success('User updated successfully!');
       setIsModalOpen(false);
     },
+    onError: () => {
+      toast.error('Failed to update user. Please try again.');
+    }
   });
 
   const deleteMutation = useMutation({
     mutationFn: deleteUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
+      toast.success('User deleted successfully!');
     },
+    onError: () => {
+      toast.error('Failed to delete user. Please try again.');
+    }
   });
 
   const createMutation = useMutation({
     mutationFn: createUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
+      toast.success('User created successfully!');
       setIsModalOpen(false);
     },
+    onError: () => {
+      toast.error('Failed to create user. Please try again.');
+    }
   });
 
   const handleSort = useCallback((field: string) => {
@@ -89,10 +101,7 @@ function Users() {
   }, [selectedUser, updateMutation, createMutation]);
 
   if (error) {
-    toast.error("Error occured reload page!", {
-      position: "top-right",
-      autoClose: 3000,
-    });
+    toast.error("Error occured reload page!");
   }
 
   return (
@@ -118,6 +127,7 @@ function Users() {
                 onDelete={(id) => deleteMutation.mutate(id)}
                 sortParams={{ field: queryParams.field, direction: queryParams.direction }}
                 onSort={handleSort}
+                isLoading={deleteMutation.isPending}
               />
 
               <div className="mt-4 flex items-center justify-between">
@@ -154,6 +164,7 @@ function Users() {
           onClose={() => setIsModalOpen(false)}
           onSubmit={handleSubmit}
           user={selectedUser}
+          isLoading={updateMutation.isPending || createMutation.isPending}
         />
       </div>
   );

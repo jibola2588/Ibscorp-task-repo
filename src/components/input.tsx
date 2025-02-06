@@ -7,7 +7,6 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export const Input: React.FC<InputProps> = ({
   label,
-  error,
   className,
   ...props
 }) => {
@@ -19,12 +18,9 @@ export const Input: React.FC<InputProps> = ({
         </label>
       )}
       <input
-        className={`block sm:w-full md:w-[400px] rounded-md border border-[#ccc]  outline-none bg-transparent py-3 px-3 h-[40px] focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${error ? 'border-red-300' : ''} ${className || ''}`}
+        className={`block sm:w-full md:w-[400px] rounded-md border border-[#ccc]  outline-none bg-transparent py-3 px-3 h-[40px] focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${className || ''}`}
         {...props}
       />
-      {error && (
-        <p className="text-sm text-red-600">{error}</p>
-      )}
     </div>
   );
 };

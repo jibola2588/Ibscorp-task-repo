@@ -19,7 +19,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <App />
-      <ToastContainer/>
+      <ToastContainer position="top-right" autoClose={3000}/>
     </QueryClientProvider>
   </StrictMode>,
 )

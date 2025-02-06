@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { User, SortParams }from '../types';
 import { Button } from './button';
 import { ConfirmationDialog } from '../components/dialogue';
-import { FaArrowsAltV } from "react-icons/fa";
 import { HiArrowSmUp,HiArrowSmDown } from "react-icons/hi";
+import { BiSort } from "react-icons/bi";
 
 interface UserTableProps {
   users: User[];
+  isLoading:boolean,
   onEdit: (user: User) => void;
   onDelete: (id: number) => void;
   sortParams: SortParams;
@@ -19,6 +20,7 @@ export const UserTable: React.FC<UserTableProps> = ({
   onDelete,
   sortParams,
   onSort,
+  isLoading = false
 }) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
@@ -42,7 +44,7 @@ export const UserTable: React.FC<UserTableProps> = ({
   };
 
   const getSortIcon = (field: string) => {
-    if (sortParams.field !== field) return <FaArrowsAltV />;
+    if (sortParams.field !== field) return <BiSort />;
     return sortParams.direction === 'asc' ? <HiArrowSmUp/> : <HiArrowSmDown />;
   };
 
@@ -115,7 +117,6 @@ export const UserTable: React.FC<UserTableProps> = ({
                   size="md"
                   className='cursor-pointer'
                   onClick={() => handleDeleteClick(user.id)}
-                  disabled={selectedUserId === user.id && deleteDialogOpen}
                 >
                   Delete
                 </Button>
@@ -126,6 +127,7 @@ export const UserTable: React.FC<UserTableProps> = ({
       </table>
 
       <ConfirmationDialog
+        isLoading={isLoading}
         open={deleteDialogOpen}
         title="Delete User?"
         message="Are you sure you want to delete this user? This action cannot be undone."

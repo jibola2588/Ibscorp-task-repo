@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { User } from '../../types';
 import { Modal } from './index';
 import { Input } from '../input';
 import { Button } from '../button';
+import { toast } from 'react-toastify';
 
 interface UserModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (data: Partial<User>) => void;
   user?: User;
+  isLoading?: boolean;
 }
 
 export const UserModal: React.FC<UserModalProps> = ({
@@ -16,8 +18,9 @@ export const UserModal: React.FC<UserModalProps> = ({
   onClose,
   onSubmit,
   user,
+  isLoading = false,
 }) => {
-  const [formData, setFormData] = React.useState<Partial<User>>(
+  const [formData, setFormData] = useState<Partial<User>>(
     user ?? {
       name: '',
       email: '',
@@ -59,23 +62,32 @@ export const UserModal: React.FC<UserModalProps> = ({
       });
     }
   }, [user,isOpen]);
+
+  const validateForm = () => {
+    const requiredFields = ['name', 'email', 'phone','website', 'company.name'];
+    const newErrors: Record<string, string> = {};
+  
+    requiredFields.forEach(field => {
+      const value = field.split('.').reduce((acc:any, key) => acc?.[key], formData);
+      if (!value?.trim()) newErrors[field] = `${field.replace('.', ' ')} is required`;
+    });
+  
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
-    onClose();
+    if (validateForm()) {
+      onSubmit(formData);
+    } else {
+      toast.warning('Please fill in all required fields');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name.includes('.')) {
       const [parent, child] = name.split('.');
-    //   setFormData(prev => ({
-    //     ...prev,
-    //     [parent]: {
-    //       ...prev[parent as keyof User],
-    //       [child]: value,
-    //     },
-    //   }));
     setFormData(prev => ({
         ...prev,
         [parent]: {
@@ -100,7 +112,6 @@ export const UserModal: React.FC<UserModalProps> = ({
           name="name"
           value={formData.name}
           onChange={handleChange}
-          required
         />
         <Input
           label="Email"
@@ -108,14 +119,12 @@ export const UserModal: React.FC<UserModalProps> = ({
           type="email"
           value={formData.email}
           onChange={handleChange}
-          required
         />
         <Input
           label="Phone"
           name="phone"
           value={formData.phone}
           onChange={handleChange}
-          required
         />
         <Input
           label="Website"
@@ -128,7 +137,6 @@ export const UserModal: React.FC<UserModalProps> = ({
           name="company.name"
           value={formData.company?.name}
           onChange={handleChange}
-          required
         />
         <Input
           label="Company Catch Phrase"
@@ -137,11 +145,22 @@ export const UserModal: React.FC<UserModalProps> = ({
           onChange={handleChange}
         />
         <div className="mt-5 flex justify-end gap-2">
-          <Button type="button" variant="secondary" onClick={onClose}>
+          <Button 
+          type="button" 
+          variant="secondary" 
+          onClick={onClose} 
+          disabled={isLoading}
+          className='cursor-pointer'
+          >
             Cancel
           </Button>
-          <Button type="submit" variant="primary">
-            {user ? 'Update' : 'Create'}
+          <Button 
+          type="submit" 
+          variant="primary" 
+          isLoading={isLoading}
+          className='cursor-pointer'
+          >
+            { user ? 'Update' : 'Create'}
           </Button>
         </div>
       </form>

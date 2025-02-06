@@ -10,6 +10,7 @@ interface ConfirmationDialogProps {
   open: boolean;
   title: string;
   message: string;
+  isLoading:boolean,
   onClose: () => void;
   onConfirm: () => void;
 }
@@ -18,6 +19,7 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
   open,
   title,
   message,
+  isLoading,
   onClose,
   onConfirm,
 }) => {
@@ -36,8 +38,15 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} variant='secondary' className='cursor-pointer'>Cancel</Button>
-        <Button onClick={onConfirm} autoFocus variant="danger" className='cursor-pointer'>
-          Confirm
+        <Button 
+        onClick={onConfirm} 
+        autoFocus 
+        variant="danger" 
+        className='cursor-pointer' 
+        disabled={isLoading}
+        isLoading={isLoading}
+        >
+          Confirm  
         </Button>
       </DialogActions>
     </Dialog>
