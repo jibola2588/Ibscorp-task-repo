@@ -11,7 +11,7 @@ overflow-x: hidden;
 const DashboardLayout = () => {
   return (
     <div className="flex items-start w-full h-[100vh]">
-       <SideNav />
+       <SideNav/>
         <section className="flex-1 flex flex-col h-[100%] overflow-x-auto">
           <Navbar />
           <Wrapper>

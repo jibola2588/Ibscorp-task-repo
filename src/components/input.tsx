@@ -20,7 +20,7 @@ export const Input: React.FC<InputProps> = ({
         </label>
       )}
       <input
-        className={`block sm:w-full md:w-[400px] rounded-md border border-[#ccc]  outline-none bg-transparent py-3 px-3 h-[40px] focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${className || ''}`}
+        className={`block w-full rounded-md border border-[#ccc]  outline-none bg-transparent py-3 px-3 h-[40px] focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${className || ''}`}
         {...props}
       />
     </div>

@@ -108,7 +108,7 @@ function Users() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
          
         <div className="mt-8">
-          <div className="flex items-center justify-between flex-wrap-reverse mb-6">
+          <div className="flex items-center justify-between flex-wrap-reverse mb-6 gap-4">
             <Input
               placeholder="Search users..."
               value={queryParams.search}
@@ -131,7 +131,7 @@ function Users() {
               />
 
               <div className="mt-4 flex items-center justify-between">
-                <div className="text-sm text-gray-700">
+                <div className="text-sm text-gray-700 hidden sm:block">
                   Showing {((queryParams.page - 1) * queryParams.limit) + 1} to{' '}
                   {Math.min(queryParams.page * queryParams.limit, data?.total ?? 0)} of{' '}
                   {data?.total ?? 0} results
